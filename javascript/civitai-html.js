@@ -269,18 +269,31 @@ function pressRefresh() {
 //         childDiv.style.cssText = `box-shadow: ${isDark ? '#ffffff' : '#000000'} 0px 0px 2px 0px; display: none;`;
 //     }
 
-//     const style = document.createElement('style');
-//     style.innerHTML = `
-//         #filterBox > div:nth-child(2) > span:nth-child(2)::before,
-//         #filterBoxL > div:nth-child(2) > span:nth-child(2)::before {
-//             background: url('${filterIconUrl}') no-repeat center center;
-//             background-size: contain;
-//         }
-//     `;
-//     document.head.appendChild(style);
-
-//     const refreshBtn = document.querySelector("#refreshBtn, #refreshBtnL");
-// }
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #filterBox > div:nth-child(2) > span:nth-child(2)::before,
+        #filterBoxL > div:nth-child(2) > span:nth-child(2)::before {
+            background: url('${filterIconUrl}') no-repeat center center;
+            background-size: contain;
+        }
+        #refreshBtn > img,
+        #refreshBtnL > img {
+            content: url('${searchIconUrl}');
+        }
+            
+        /* Gradio 4 */
+        #filterBox > button:nth-child(2),
+        #filterBoxL > button:nth-child(2) {
+            background: url('${filterIconUrl}') no-repeat center center !important;
+            background-size: 22px !important;
+        }
+        #filterBox > button:nth-child(2) > span,
+        #filterBoxL > button:nth-child(2) > span {
+            visibility: hidden;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 // Creates a tooltip if the user wants to filter liked models without a personal API key
 function createTooltip(element, hover_element, insertText) {
@@ -303,7 +316,7 @@ function createTooltip(element, hover_element, insertText) {
 // Function that closes filter dropdown if clicked outside the dropdown
 function setupClickOutsideListener() {
     var filterBox = document.getElementById("filterBoxL") || document.getElementById("filterBox");
-    var filterButton = filterBox.getElementsByTagName("div")[1];
+    var filterButton = filterBox.children[1];
     var dropDown = filterBox.getElementsByTagName("div")[2];
 
     function clickOutsideHandler(event) {
